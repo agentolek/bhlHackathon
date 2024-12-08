@@ -8,16 +8,13 @@ interface fancyMapProps {
 }
 
 export default function FancyMap(props: fancyMapProps) {
-  return props.designator ? (
+  console.log(props);
+  return (
     <embed
       type="text/html"
-      src={
-        apiUrl + "getMap?city=" + props.city + "&designator=" + props.designator
-      }
+      src={"http://localhost:5000/getMap?city=London&designator=1979-058A"}
       width={props.width}
       height={props.height}
     />
-  ) : (
-    <></>
   );
 }

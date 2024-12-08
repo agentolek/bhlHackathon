@@ -50,7 +50,7 @@ export default function MainPage() {
             designator={selectedSatellite?.designator}
             height={500}
             width={1000}
-            city={selectedSatellite ? selectedSatellite.city : "Warsaw"}
+            city="Warszawa"
           />
         </FancyMapWrapper>
         <VInfo>

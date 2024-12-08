@@ -42,11 +42,11 @@ class MapMaker:
 
         # convert meters to degrees, should work in areas not around the north poles
         lat_change = radius / 111000    # around 111 km per degree
-        long_change = (math.pi/180) * self.r_earth * math.cos(center[1]*math.pi/180)
+        long_change = radius / 111000
 
         # create grid ready for heatmap
-        x = np.linspace(center[0] - lat_change, center[0] + lat_change, 9)
-        y = np.linspace(center[1] - long_change, center[1] + long_change, 9)
+        x = np.linspace(center[0] - long_change, center[0] + long_change, 9)
+        y = np.linspace(center[1] - lat_change, center[1] + lat_change, 9)
         x, y = np.meshgrid(x, y)
         x = np.expand_dims(x, -1)
         y = np.expand_dims(y, -1)
@@ -74,10 +74,12 @@ class MapMaker:
 
         base = self.generate_heatmap(mass, center)
 
+        # add white noise
         for i in range(num_time_steps):
             stddev = stddev_start + (stddev_end - stddev_start) // num_time_steps * i
             move_data = np.random.normal(size=(len(base), 2)) * stddev
-            
+            arr = np.ones((move_data.shape[0], 1)) * -0.02 # decrease intensity of each point by 0.02
+            move_data = np.concatenate((move_data, arr), axis=-1)
             base += move_data
             data.append(base.tolist())
 
@@ -85,15 +87,17 @@ class MapMaker:
         hm = HeatMapWithTime(data, radius=50, gradient=gradient1)
         hm.add_to(m)
         file_name = "heatmap_anim" + str(int(time.time()))
+        m.save("/maps" + file_name)
         file_path: os.PathLike = os.getcwd()
-        file_path = os.path.join(file_path, "/maps", file_name)
+        file_path = os.path.join(file_path, "/maps/", file_name)
         
-        m.save(file_path)
         return file_path
 
 
 if __name__ == "__main__":
     location = (52, 23)
     mass = 10
-    mapmaker = MapMaker()
-    print(mapmaker.generate_heatmap_with_time(250, location))
+    mm = MapMaker()
+    move_data = mm.generate_heatmap(mass, location)
+    print(move_data)
+    print(mm.generate_heatmap_with_time(250, location))

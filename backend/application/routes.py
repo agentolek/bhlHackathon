@@ -22,28 +22,28 @@ def send_map():
     This endpoint needs city param to return the map
     """
     city = request.args.get('city', default='Warsaw', type=str).strip()
+    designator = request.args.get('designator', type=str)
+    print(designator)
+
     try:
         satelite_data = get_satelite_data(city)
-        lat, lng, observer_alt = get_location(city)
     except Exception:
         abort(404, 'Wrong city')
 
-    cummulated_mass = 0
-    # lat = lng = 0.0
+    satelite = None
     if isinstance(satelite_data, list):
         for single_satelite in satelite_data:
-            cummulated_mass += single_satelite["mass"]
-        #     lat += single_satelite['satlat']
-        #     lng += single_satelite["satlng"]
-        # lat /= len(satelite_data)
-        # lng /= len(satelite_data)
+            print(single_satelite["intDesignator"])
+            if single_satelite["intDesignator"] == designator:
+                satelite = single_satelite
     else:
-        cummulated_mass = satelite_data["mass"]
-        lat = satelite_data["satlat"]
-        lng = satelite_data["satlng"]
+        satelite = satelite_data
+
+    if satelite is None:
+        abort(404, 'Wrong designator')
 
     map_maker = MapMaker()
-    file_path = map_maker.generate_heatmap_with_time(cummulated_mass, (lat, lng))
+    file_path = map_maker.generate_heatmap_with_time(satelite["mass"], (satelite["satlat"], satelite["satlng"]))
     return send_from_directory(os.path.join(os.getcwd(), 'olek_stuff', 'maps'), os.path.basename(file_path))
 
 

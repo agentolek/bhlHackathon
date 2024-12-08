@@ -60,9 +60,6 @@ class MapMaker:
 
         base = base.reshape((base.shape[0]*base.shape[1], 3))
         return base
-    
-    def create_path(file_path):
-        pass
 
     def generate_heatmap_with_time(self, mass: float, center: (float, float)):
         num_time_steps = 100
@@ -81,7 +78,7 @@ class MapMaker:
         for i in range(num_time_steps):
             stddev = stddev_start + (stddev_end - stddev_start) // num_time_steps * i
             move_data = np.random.normal(size=(len(base), 2)) * stddev
-            arr = np.ones((move_data.shape[0], 1)) * -0.02 # decrease intensity of each point by 0.02
+            arr = np.ones((move_data.shape[0], 1)) * -3 / num_time_steps # decrease intensity of each point
             move_data = np.concatenate((move_data, arr), axis=-1)
             base += move_data
             data.append(base.tolist())
@@ -89,7 +86,7 @@ class MapMaker:
         m = Map([*center], zoom_start=9)
         hm = HeatMapWithTime(data, radius=50, gradient=gradient1)
         hm.add_to(m)
-        file_name = "hm_anim" + str(int(time.time()))
+        file_name = "hm_anim" + str(int(time.time())) + ".html"
         file_path = os.path.join(os.getcwd() + f"/olek_stuff/maps/{file_name}")
         m.save( os.getcwd() + f"/olek_stuff/maps/{file_name}")
 
@@ -97,7 +94,7 @@ class MapMaker:
 
 
 if __name__ == "__main__":
-    location = (52, 23)
+    location = (52.23, 21.01)
     mass = 10
     mm = MapMaker()
     print(mm.generate_heatmap_with_time(mass, location))

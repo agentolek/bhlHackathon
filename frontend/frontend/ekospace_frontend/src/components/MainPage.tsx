@@ -142,11 +142,6 @@ const Title = styled.h1`
 
 const Subtitle = styled.h2``;
 
-const MapSwitcher = styled.div`
-  display: flex;
-  justify-content: center;
-`;
-
 const MSSelection = styled.button`
   margin: 0px 10px;
 `;

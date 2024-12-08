@@ -3,6 +3,7 @@ import { apiUrl } from "./constants";
 export interface satellite {
   name: string;
   designator: string;
+  mass: number;
 }
 
 interface satelliteResponse {
@@ -27,6 +28,7 @@ export async function getSatellites(city: string) {
     return {
       name: sattelite.satname,
       designator: sattelite.intDesignator,
+      mass: satellite.mass,
     } as satellite;
   });
 }

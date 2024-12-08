@@ -46,7 +46,12 @@ export default function MainPage() {
       )}
       <Visualizer>
         <FancyMapWrapper>
-          <FancyMap height={500} width={1000} />
+          <FancyMap
+            designator={selectedSatellite?.designator}
+            height={500}
+            width={1000}
+            city={selectedSatellite ? selectedSatellite.city : "Warsaw"}
+          />
         </FancyMapWrapper>
         <VInfo>
           <VTitle>

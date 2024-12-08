@@ -15,8 +15,6 @@ export default function SatelliteSelector(props: satelliteSelectorProps) {
     getSatellites(city ? city : "").then((res) => setSatellites(res));
   }, [city]);
 
-  console.log(satellites);
-
   return (
     <Wrapper>
       <CityInput

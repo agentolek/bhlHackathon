@@ -4,6 +4,7 @@ export interface satellite {
   name: string;
   designator: string;
   mass: number;
+  city: string;
 }
 
 interface satelliteResponse {
@@ -25,6 +26,7 @@ export async function getSatellites(city: string) {
       name: satellite.satname,
       designator: satellite.intDesignator,
       mass: satellite.mass,
+      city: city,
     } as satellite;
   });
 }

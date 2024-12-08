@@ -5,7 +5,7 @@ path_to_cwd = os.getcwd()
 sys.path.append(path_to_cwd)
 
 from application import app
-from .get_satelite_data import get_satelite_data, get_location
+from .get_satelite_data import get_satelite_data
 from olek_stuff.calc_satellite_emissions import MapMaker
 
 from flask import send_from_directory, jsonify, request, abort
@@ -52,7 +52,6 @@ def send_map():
 def send_satelites_data():
     """
     Route to return json of informations about ateroids that are above given city
-
     This endpoint needs city param to return the map
     """
     city = request.args.get('city', default='Warsaw', type=str).strip()

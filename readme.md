@@ -6,7 +6,16 @@ Aby uruchomić aplikację lokalnie najpierw należy pobrać repozytorium:
 git clone https://github.com/agentolek/bhlHackathon
 ```
 ## Backend
-TODO
+Backend jest napisany w frameworku Flask, a do generowania wizualizacji używa biblioteki Folium. Aby go uruchomić należy najpierw pobrać odpowiednie zależności:
+```bash
+pip install flask folium
+```
+> :warning: Uwaga! Zalecane jest korzystanie z narzędzia tworzącego wirtualne środowsko, jak np. `venv`.
+
+Po pobraniu zależności wystarczy uruchomić aplikacje z korzenia repozytorium, przy pomocy polecenia:
+```bash
+python3 backend/run.py
+```
 ## Frontend
 Frontend jest napisany w frameworku Vite, przy użyciu biblioteki React.js oraz języka TypeScript. Jako package managera użyliśmy narzędzia yarn, a więc najpierw pobieramy yarna.
 ```bash

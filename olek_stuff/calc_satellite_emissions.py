@@ -4,7 +4,8 @@ from typing import Any
 from folium import Map
 from folium.plugins import HeatMapWithTime
 import math
-
+import time
+import os
 
 class MapMaker:
     def __init__(self):
@@ -60,7 +61,7 @@ class MapMaker:
         base = base.reshape((base.shape[0]*base.shape[1], 3))
         return base
 
-    def generate_heatmap_with_time(self, mass: float, center: (float, float)) -> File:
+    def generate_heatmap_with_time(self, mass: float, center: (float, float)):
         num_time_steps = 100
         data = []
 
@@ -76,21 +77,23 @@ class MapMaker:
         for i in range(num_time_steps):
             stddev = stddev_start + (stddev_end - stddev_start) // num_time_steps * i
             move_data = np.random.normal(size=(len(base), 2)) * stddev
+            
             base += move_data
             data.append(base.tolist())
 
         m = Map([*center], zoom_start=9)
         hm = HeatMapWithTime(data, radius=50, gradient=gradient1)
         hm.add_to(m)
-        m.save('heatmap_animation.html')
-        return 'heatmap_animation.html'
-
-        # Czy rozwiązujemy jakoś problem nadpisywania plików? Można by zrobić archiwum i numerowanie z timestamp
+        file_name = "heatmap_anim" + str(int(time.time()))
+        file_path: os.PathLike = os.getcwd()
+        file_path = os.path.join(file_path, "/maps", file_name)
+        
+        m.save(file_path)
+        return file_path
 
 
 if __name__ == "__main__":
     location = (52, 23)
     mass = 10
     mapmaker = MapMaker()
-    arr = mapmaker.generate_heatmap(mass, location)
-    print(arr.shape)
+    print(mapmaker.generate_heatmap_with_time(250, location))

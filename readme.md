@@ -6,9 +6,9 @@ Aby uruchomić aplikację lokalnie najpierw należy pobrać repozytorium:
 git clone https://github.com/agentolek/bhlHackathon
 ```
 ## Backend
-tak się buduje backend...
+TODO
 ## Frontend
-Frontend jest napisany w frameworku Vite, przy użyciu biblioteki React.js. Jako package managera użyliśmy narzędzia yarn, a więc najpierw pobieramy yarna.
+Frontend jest napisany w frameworku Vite, przy użyciu biblioteki React.js oraz języka TypeScript. Jako package managera użyliśmy narzędzia yarn, a więc najpierw pobieramy yarna.
 ```bash
 npm install -g yarn
 ```

@@ -9,13 +9,24 @@ interface satelliteProps {
 export default function Satellite(props: satelliteProps) {
   return (
     <Wrapper>
-      <SatName>{props.satellite.name}</SatName>
+      <SatInfo>
+        <SatName>{props.satellite.name}</SatName>
+        <SatMass>masa: {props.satellite.mass} kg</SatMass>
+      </SatInfo>
       <SelectSatButton onClick={() => props.onSelect(props.satellite)}>
         Wybierz
       </SelectSatButton>
     </Wrapper>
   );
 }
+
+const SatInfo = styled.div`
+  display: flex;
+  margin-left: 10px;
+  flex-direction: column;
+`;
+
+const SatMass = styled.p``;
 
 const SelectSatButton = styled.button`
   margin: 10px;
@@ -30,5 +41,4 @@ const Wrapper = styled.div`
 
 const SatName = styled.h1`
   font-size: 1.5em;
-  margin-left: 10px;
 `;

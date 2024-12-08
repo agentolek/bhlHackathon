@@ -14,20 +14,16 @@ interface satelliteResponse {
   satlat: number;
   satlng: number;
   satname: string;
-}
-
-interface satellitesResponse {
-  above: satelliteResponse[];
-  info: unknown;
+  mass: number;
 }
 
 export async function getSatellites(city: string) {
   const data = await fetch(apiUrl + "getSatelites?city=" + city);
-  const jsonData = (await data.json()) as satellitesResponse;
-  return jsonData.above?.map((sattelite) => {
+  const jsonData = (await data.json()) as satelliteResponse[];
+  return jsonData.map((satellite) => {
     return {
-      name: sattelite.satname,
-      designator: sattelite.intDesignator,
+      name: satellite.satname,
+      designator: satellite.intDesignator,
       mass: satellite.mass,
     } as satellite;
   });

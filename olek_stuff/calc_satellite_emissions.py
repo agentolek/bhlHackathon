@@ -60,6 +60,9 @@ class MapMaker:
 
         base = base.reshape((base.shape[0]*base.shape[1], 3))
         return base
+    
+    def create_path(file_path):
+        pass
 
     def generate_heatmap_with_time(self, mass: float, center: (float, float)):
         num_time_steps = 100
@@ -86,11 +89,10 @@ class MapMaker:
         m = Map([*center], zoom_start=9)
         hm = HeatMapWithTime(data, radius=50, gradient=gradient1)
         hm.add_to(m)
-        file_name = "heatmap_anim" + str(int(time.time()))
-        m.save("/maps" + file_name)
-        file_path: os.PathLike = os.getcwd()
-        file_path = os.path.join(file_path, "/maps/", file_name)
-        
+        file_name = "hm_anim" + str(int(time.time()))
+        file_path = os.path.join(os.getcwd() + f"/olek_stuff/maps/{file_name}")
+        m.save( os.getcwd() + f"/olek_stuff/maps/{file_name}")
+
         return file_path
 
 
@@ -98,6 +100,4 @@ if __name__ == "__main__":
     location = (52, 23)
     mass = 10
     mm = MapMaker()
-    move_data = mm.generate_heatmap(mass, location)
-    print(move_data)
-    print(mm.generate_heatmap_with_time(250, location))
+    print(mm.generate_heatmap_with_time(mass, location))

@@ -52,7 +52,24 @@ export default function MainPage() {
           <VTitle>
             {selectedSatellite ? selectedSatellite.name : "wybierz satelitę..."}
           </VTitle>
-          <VDescription>Mock sattelite description (TODO)</VDescription>
+          <VDescription>
+            {selectedSatellite ? (
+              <>
+                Satelita {selectedSatellite.name} spalając się w atmosferze
+                wygenerowała ogromne ilości tlenku aluminium który może mieć
+                wpływ na jakość powietrza oraz warunki atmosferyczne. Tlenek
+                aluminium jest drobnocząsteczkowym pyłem, który może osiadać w
+                atmosferze, potencjalnie wpływając na jej właściwości optyczne,
+                takie jak zdolność odbijania promieni słonecznych. Ponadto jego
+                obecność w wyższych warstwach atmosfery może oddziaływać na
+                procesy chemiczne, w tym reakcje związane z ozonem. Naukowcy
+                wciąż badają, jakie są długoterminowe skutki takich zdarzeń na
+                środowisko i klimat.
+              </>
+            ) : (
+              <></>
+            )}
+          </VDescription>
         </VInfo>
       </Visualizer>
       <Spacer />

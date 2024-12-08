@@ -42,7 +42,7 @@ def get_satelite_data(city):
     if isinstance(response_above, list):
         for single_satelite in response_above:
             single_satelite["mass"] = get_mass()
-        if len(response) > 10:
+        if len(response_above) > 10:
             return response_above[:10]
         else:
             return response_above

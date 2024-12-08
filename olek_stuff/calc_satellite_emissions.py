@@ -9,6 +9,10 @@ def calc_aluminium_content(mass: float) -> float:
     # this mult is assumes in the paper
     return mass * 0.3
 
+def change_over_time(initial_data: npt.NDArray, time_step: float, num_steps: int):
+    # TODO: find how long aluminium remains in the atmosphere for
+    pass
+
 def calc_gas_radius(mass: float) -> float:
     # PV = nRT -> V = nRT / P
     # Al = 26.982 g/mol

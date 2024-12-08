@@ -1,22 +1,24 @@
 import styled from "styled-components";
 import FancyMap from "./FancyMap";
-import { useState } from "react";
 import Footer from "./Footer";
+import { Link } from "react-router";
 
-export default function MainBanner() {
-  const [selectedSat, setSelectedSat] = useState<string>("");
-
+export default function MainPage() {
   return (
     <Wrapper>
       <TopPart>
         <Title>EKO Space</Title>
         <Subtitle>Kosmosu nie pomalujesz</Subtitle>
+        <NavLink to={"/mission"}>Nasza misja</NavLink>
       </TopPart>
+      <Heading>Wizualizacja zanieczyszczeń</Heading>
       <OrganizationDescription>
         Nasza misja to ochrona naszej planety przed skutkami zanieczyszczeń
         wynikających z dynamicznie rozwijającego się przemysłu kosmicznego. W
         EcoOrbit wierzymy, że eksploracja kosmosu nie powinna odbywać się
-        kosztem środowiska naturalnego.
+        kosztem środowiska naturalnego. Poniższa wizualizacja pozwoli każdemu
+        zobaczyć na własne oczy jak kosmiczne odpady wpadające do atmosfery są
+        zanieczyszczają.
       </OrganizationDescription>
       <SatImpactPreviewTitle>
         Oto jak satelity wpływają na atmosferę:
@@ -45,10 +47,15 @@ export default function MainBanner() {
           </VDescription>
         </VInfo>
       </Visualizer>
+      <Spacer />
       <Footer />
     </Wrapper>
   );
 }
+
+const NavLink = styled(Link)`
+  font-size: 1.2em;
+`;
 
 const SatImpactSelectorDescription = styled.div`
   font-size: 120%;
@@ -66,6 +73,9 @@ const OrganizationDescription = styled.p`
   width: 60vw;
   margin: 10px auto;
 `;
+const Spacer = styled.div`
+  height: 50px;
+`;
 
 const FancyMapWrapper = styled.div`
   margin: 30px auto 0px auto;
@@ -75,6 +85,10 @@ const Wrapper = styled.div`
   width: 100vw;
 `;
 
+const Heading = styled.h1`
+  margin: 30px 0px;
+`;
+
 const TopPart = styled.div`
   height: 400px;
   background-color: rgb(8, 42, 55);
@@ -82,7 +96,6 @@ const TopPart = styled.div`
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
-  margin: -40px;
   clip-path: polygon(
     0% 0%,
     100% 0%,

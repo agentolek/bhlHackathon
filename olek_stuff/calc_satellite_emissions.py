@@ -14,10 +14,6 @@ class MapMaker:
         # this mult is assumed in the paper
         return mass * 0.3
 
-    def change_over_time(self, initial_data: npt.NDArray, time_step: float, num_steps: int):
-        # TODO: find how long aluminium remains in the atmosphere for
-        pass
-
     def _calc_gas_radius(self, mass: float) -> float:
         # PV = nRT -> V = nRT / P
         # Al = 26.982 g/mol
@@ -64,7 +60,7 @@ class MapMaker:
         base = base.reshape((base.shape[0]*base.shape[1], 3))
         return base
 
-    def generate_heatmap_with_time(self, mass: float, center: (float, float)) -> string:
+    def generate_heatmap_with_time(self, mass: float, center: (float, float)) -> File:
         num_time_steps = 100
         data = []
 

@@ -3,6 +3,8 @@ import numpy.typing as npt
 from typing import Any
 import math
 
+r_earth: int = 6378
+
 def calc_aluminium_content(mass: float) -> float:
     # this mult is assumes in the paper
     return mass * 0.3
@@ -28,12 +30,16 @@ def get_point_intensity(center: tuple[float, float], point_loc: tuple[float, flo
     intensity = math.sqrt(radius**2 - distance**2)
     return intensity / radius
 
-def generate_heatmap(time_elapsed: float, mass: float, center: tuple[float, float]) -> npt.NDArray[Any]:
+def generate_heatmap(mass: float, center: tuple[float, float]) -> npt.NDArray[Any]:
     radius: float = calc_gas_radius(mass)
 
+    # convert meters to degrees, should work in areas not around the north poles
+    lat_change = radius / 111000 # around 111 km per degree
+    long_change = (math.pi/180) * r_earth * math.cos(center[1]*math.pi/180)
+
     # create grid ready for heatmap
-    x = np.linspace(center[0] - radius, center[0] + radius, 9)
-    y = np.linspace(center[1] - radius, center[1] + radius, 9)
+    x = np.linspace(center[0] - lat_change, center[0] + lat_change, 9)
+    y = np.linspace(center[1] - long_change, center[1] + long_change, 9)
     x, y = np.meshgrid(x, y)
     x = np.expand_dims(x, -1)
     y = np.expand_dims(y, -1)
@@ -52,5 +58,5 @@ def generate_heatmap(time_elapsed: float, mass: float, center: tuple[float, floa
 if __name__ == "__main__":
     location = [52, 23]
     mass = 10
-    arr = generate_heatmap(0, mass, location)
+    arr = generate_heatmap(mass, location)
     print(arr.shape)

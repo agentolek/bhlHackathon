@@ -2,8 +2,15 @@ import styled from "styled-components";
 import FancyMap from "./FancyMap";
 import Footer from "./Footer";
 import { Link } from "react-router";
+import SatelliteSelector from "./SatelliteSelector";
+import { useState } from "react";
+import { satellite } from "../api/getSatellites";
 
 export default function MainPage() {
+  const [satelliteSelectorVisible, setSatelliteSelectorVisible] =
+    useState<boolean>(false);
+  const [selectedSatellite, setSelectedSatellite] = useState<satellite>();
+
   return (
     <Wrapper>
       <TopPart>
@@ -24,27 +31,28 @@ export default function MainPage() {
         Oto jak satelity wpływają na atmosferę:
       </SatImpactPreviewTitle>
       <SatImpactSelectorDescription>
-        Wybierz satelitę, aby zobaczyć jak wygląda jej wpływ na naszą atmosferę.
+        Znajdź satelitę nad wybranym miastem i zobacz jak będzie wyglądać jego
+        wpływ na środowisko, gdy wpadnie w atmosferę.
       </SatImpactSelectorDescription>
-      <MapSwitcher>
-        <MSSelection>SAT1-2137</MSSelection>
-        <MSSelection>MEGUSMaximus Alpha</MSSelection>
-        <MSSelection>ISS</MSSelection>
-      </MapSwitcher>
+      <MSSelection
+        onClick={() => setSatelliteSelectorVisible(!satelliteSelectorVisible)}
+      >
+        Wyszukaj satelitę
+      </MSSelection>
+      {satelliteSelectorVisible ? (
+        <SatelliteSelector onSelect={setSelectedSatellite} />
+      ) : (
+        <></>
+      )}
       <Visualizer>
         <FancyMapWrapper>
           <FancyMap height={500} width={1000} />
         </FancyMapWrapper>
         <VInfo>
-          <VTitle>SAT1-2137</VTitle>
-          <VDescription>
-            SAT1-2137 była fikcyjnym satelitą komunikacyjnym wystrzelonym na
-            orbitę w ramach międzynarodowego programu badawczego w 2017 roku.
-            Zaprojektowana z myślą o przesyłaniu danych w trudnych warunkach
-            pogodowych, obsługiwała regiony o ograniczonej infrastrukturze
-            telekomunikacyjnej, zapewniając dostęp do internetu i usług
-            transmisji danych w miejscach niedostępnych dla tradycyjnych sieci.
-          </VDescription>
+          <VTitle>
+            {selectedSatellite ? selectedSatellite.name : "wybierz satelitę..."}
+          </VTitle>
+          <VDescription>Mock sattelite description (TODO)</VDescription>
         </VInfo>
       </Visualizer>
       <Spacer />
